@@ -14,7 +14,9 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@company/prettier-config": "./prettier.config.json",
     "@vitejs/plugin-vue": "^4.0.0",
+    "prettier": "2.8.8",
     "vite": "^4.0.0"
   }
 }
