@@ -10,6 +10,7 @@
   
 <script>
 import { login, state as authState } from '../../managers/auth.manager'
+import { ref } from 'vue'
 
 export default {
   setup() {

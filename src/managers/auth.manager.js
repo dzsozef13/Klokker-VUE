@@ -1,6 +1,10 @@
 import { reactive } from 'vue'
 import axios from 'axios'
-import { useStore } from 'pinia'
+import { useAuthStore } from '../stores/auth.store'
+
+const authService = axios.create({
+  baseURL: 'http://localhost:4000/auth'
+});
 
 const state = reactive({
   loading: false,
@@ -10,13 +14,14 @@ const state = reactive({
 const login = async (email, password) => {
   state.loading = true
   state.error = null
-  const store = useStore()
+  const store = useAuthStore()
   try {
-    const response = await axios.post('/api/login', {
+    const response = await authService.post('/login', {
       email,
       password
     })
-    const token = response.data.access_token
+    const token = response.data.token
+    console.log(token);
     store.commit('setToken', token)
   } catch (error) {
     state.error = error.response.data
