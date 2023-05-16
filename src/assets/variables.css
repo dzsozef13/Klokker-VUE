@@ -1,0 +1,52 @@
+:root {
+  --kl-accent: #3B6DEE;
+
+  --kl-green: #2CD25E;
+  --kl-yellow: #D9A933;
+  --kl-red: #E0334F;
+
+  --kl-dark-1: #181818;
+  --kl-dark-2: #1D1D1D;
+  --kl-dark-3: #252525;
+
+  --kl-light-1: #EEEEEE;
+  --kl-light-2: #D6D6D6;
+  --kl-light-3: #969696;
+}
+
+:root {
+  --font-size-small: 16px;
+  --font-size-medium: 20px;
+  --font-size-large: 32px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --font-size-small: 16px;
+    --font-size-medium: 20px;
+    --font-size-large: 32px;
+  }
+}
+
+:root {
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+}
+
+:root {
+  --border-radius-small: 4px;
+  --border-radius-medium: 8px;
+  --border-radius-large: 16px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+  font-weight: normal;
+}

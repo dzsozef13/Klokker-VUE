@@ -1,8 +1,11 @@
 <template>
-  <div>
-    <input type="email" v-model="email">
-    <input type="password" v-model="password">
-    <button @click="submitLogin">Login</button>
+  <div id="form">
+    <h2 class="title" >Login</h2>
+    <h5 class="input-title">Email</h5>
+    <input class="input" type="email" placeholder="myfunkyemail@klokker.com" v-model="email">
+    <h5 class="input-title">Password</h5>
+    <input type="password" placeholder="iloveCats123" v-model="password">
+    <button @click="submitLogin" id="login-button" class="rounded-m" >Login</button>
     <div v-if="authState.loading">Loading...</div>
     <div v-if="authState.error">Error: {{ authState.error }}</div>
   </div>
@@ -31,4 +34,20 @@ export default {
 }
 </script>
   
-<style lang="scss" scoped></style>
+<style scoped>
+#form {
+  display: flex;
+  flex-direction: column;
+}
+.input {
+  margin-bottom: 16px;
+}
+
+.title {
+  margin-bottom: 16px;
+}
+
+#login-button {
+  margin-top: 32px;
+}
+</style>
