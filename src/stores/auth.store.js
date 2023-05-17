@@ -1,12 +1,19 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
 export const useAuthStore = defineStore('auth', () => {
+  const token = '';
 
-  var token = '';
-
-  function reset() {
-    token = '';
+  function setToken(newToken) {
+    token.value = newToken;
   }
 
-  return { token, reset }
-})
+  function clearToken() {
+    token.value = '';
+  }
+
+  return {
+    token,
+    setToken,
+    clearToken,
+  };
+});

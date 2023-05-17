@@ -63,6 +63,7 @@
   display: block;
   width: 100%;
   height: min-content;
+  width: min-content;
   object-fit: cover;
   position: absolute;
   top: -100%;
