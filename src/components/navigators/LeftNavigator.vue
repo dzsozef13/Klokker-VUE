@@ -1,49 +1,78 @@
+<script setup>
+import { ref } from 'vue';
+import { storage } from '../../storage/local.storage'
+
+const user = ref(storage.get('user'));
+
+const visitorMenuItems = ref([
+  {
+    title: "Home",
+    path: "/"
+  },
+  {
+    title: "Login",
+    path: "/login"
+  },
+  {
+    title: "Register",
+    path: "/regist"
+  },
+])
+
+const userMenuItems = ref([
+  {
+    title: "Dashboard",
+    path: "/dashboard"
+  },
+  {
+    title: "New Task",
+    path: "/new-task"
+  },
+])
+
+const adminMenuItems = ref([
+  {
+    title: "Dashboard",
+    path: "/dashboard"
+  },
+  {
+    title: "New Task",
+    path: "/new-task"
+  },
+  {
+    title: "Invite Members",
+    path: "/invite"
+  },
+])
+</script>
+
 <template>
-  <div id="container" class="rounded-m">
+  <div id="container" class="rounded-m shadow">
     <div id="logo">
       <h1>Klokker</h1>
     </div>
-    <ul>
-      <li v-for="(item, index) in menuItems" :key="index">
-        <a :href="item.path">{{ item.title }}</a>
-      </li>
+      <ul>
+        <ul v-if="user?.role === 'user'">
+          <li v-for="(item, index) in userMenuItems" :key="index">
+            <a :href="item.path">{{ item.title }}</a>
+          </li>
+        </ul>
+      <ul v-else-if="user?.role === 'admin'">
+        <li v-for="(item, index) in adminMenuItems" :key="index">
+          <a :href="item.path">{{ item.title }}</a>
+        </li>
+      </ul>
+      <ul v-else>
+        <li v-for="(item, index) in visitorMenuItems" :key="index">
+          <a :href="item.path">{{ item.title }}</a>
+        </li>
+      </ul>
     </ul>
   </div>
 </template>
   
-<script>
-import { reactive } from 'vue';
-
-export default {
-  setup() {
-    const state = reactive({
-      menuItems: [
-        {
-          title: "Home",
-          path: "/"
-        },
-        {
-          title: "Login",
-          path: "/login"
-        },
-        {
-          title: "Register",
-          path: "/regist"
-        },
-      ]
-    });
-
-    return {
-      menuItems: state.menuItems,
-    };
-  },
-};
-</script>
-  
 <style scoped>
-#logo, h1 {
-  font-size: var(--font-size-large);
-  font-weight: var(--font-weight-bold);
+#logo h1 {
   margin-bottom: 32px;
 }
 

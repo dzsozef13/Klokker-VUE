@@ -1,18 +1,16 @@
 <script setup>
-import { useAuthStore } from '../stores/auth.store';
-import { computed } from 'vue';
+import { ref } from 'vue';
+import { storage } from '../storage/local.storage'
 
-const token = localStorage.getItem("auth-token");
-
+const token = ref(storage.get('token'));
+const user = ref(storage.get('user'));
 </script>
 
 <template>
   <div class="row fullpage">
-    <div class="col-1 center-v center-h stack-items">
-      <img id="art" class="background-image" src="../assets/images/clouds-1.png">
-      <h2>Welcome.</h2>
-      <p>{{ token }}</p>
+    <div class="col-1 center-v center-h">
+      <h2>Welcome {{ user.name }} to this beautiful website that does nothing just yet</h2>
+      <h5>{{ token }}</h5>
     </div>
   </div>
 </template>
-

@@ -16,8 +16,13 @@ body {
   user-select: none; /* Standard syntax */
 }
 
+div {
+  overflow-wrap: break-word;
+}
+
 #app {
   margin: 0 0 0 240px;
+  width: 100%;
   max-width: 960px;
 }
 

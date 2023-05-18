@@ -14,7 +14,7 @@ const hideMessage = () => {
 </script>
 
 <template>
-  <div v-if="visible" class="message rounded-m">
+  <div v-if="visible" class="message rounded-m shadow">
     <h5>{{ message }}</h5>
     <button class="rounded-s" @click="hideMessage">OK</button>
   </div>

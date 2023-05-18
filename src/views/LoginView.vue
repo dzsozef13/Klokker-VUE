@@ -11,13 +11,13 @@ const handleLoginResponse = (msg) => {
   showMessage.value = true
   setTimeout(() => {
     showMessage.value = false;
-  }, 3000);
+  }, 10000);
 };
 </script>
 
 <template>
   <div class="row fullpage">
-    <div class="col-2 center-v center-h stack-items">
+    <div class="col-2 center-v center-h">
       <img id="art" class="background-image" src="../assets/images/clouds-1.png">
       <h2>Keep track of tasks, manage your teams.</h2>
     </div>
