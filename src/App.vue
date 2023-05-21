@@ -4,7 +4,9 @@ import LeftNavigator from './components/navigators/LeftNavigator.vue'
 </script>
 
 <template>
-  <RouterView/>
+  <Suspense> 
+    <RouterView/>
+  </Suspense>
   <LeftNavigator/>
 </template>
 

@@ -15,8 +15,9 @@ const hideMessage = () => {
 
 <template>
   <div v-if="visible" class="message rounded-m shadow">
+    <h5>⚠️</h5>
     <h5>{{ message }}</h5>
-    <button class="rounded-s" @click="hideMessage">OK</button>
+    <button class="rounded-s" @click="hideMessage">👍</button>
   </div>
 </template>
   
@@ -42,6 +43,7 @@ h5 {
 }
 
 button {
+  padding: 0;
   width: 40px;
   height: 40px;
 }

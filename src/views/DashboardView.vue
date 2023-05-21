@@ -50,62 +50,6 @@ const tasks = ref([
   <div class="row header">
     <h1>Dashboard</h1>
   </div>
-  <div class="space-h"></div>
-  <div class="row fullpage">
-    <div class="col-3 center-v">
-      <h3>Todo</h3>
-      <div v-for="task in tasks">
-        <div v-if="task?.state === 'todo'">
-          <TaskCard 
-            :title="task.title" 
-            :description="task.description"
-            :assignedUser="task.assignedUser"
-            :startDate="task.startDate"
-            :dueDate="task.dueDate"
-            :state="task.state"
-            :billable="task.billable"
-          />
-          <div class="space-h"></div>
-        </div>
-      </div>
-    </div>
-    <div class="space-v"></div>
-    <div class="col-3 center-v">
-      <h3>Doing</h3>
-      <div v-for="task in tasks">
-        <div v-if="task?.state === 'doing'">
-          <TaskCard 
-            :title="task.title" 
-            :description="task.description"
-            :assignedUser="task.assignedUser"
-            :startDate="task.startDate"
-            :dueDate="task.dueDate"
-            :state="task.state"
-            :billable="task.billable"
-          />
-          <div class="space-h"></div>
-        </div>
-      </div>
-    </div>
-    <div class="space-v"></div>
-    <div class="col-3 center-v">
-      <h3>Done</h3>
-      <div v-for="task in tasks">
-        <div v-if="task?.state === 'done'">
-          <TaskCard 
-            :title="task.title" 
-            :description="task.description"
-            :assignedUser="task.assignedUser"
-            :startDate="task.startDate"
-            :dueDate="task.dueDate"
-            :state="task.state"
-            :billable="task.billable"
-          />
-          <div class="space-h"></div>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>
 
 <style scoped>

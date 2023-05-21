@@ -1,12 +1,20 @@
 <script setup>
 import { ref } from 'vue';
-import LoginForm from '../components/forms/LoginForm.vue';
+import { storage } from '../storage/local.storage'
+import TeamForm from '../components/forms/TeamForm.vue';
 import MessagePopup from '../components/popups/MessagePopup.vue';
+import teamManager from '../managers/team.manager';
+
+const token = ref(storage.get('token'));
+const user = ref(storage.get('user'));
+
+const { create, state, getForLoggedInUser } = teamManager()
 
 const message = ref('');
 const showMessage = ref(false);
+const team = ref(await getForLoggedInUser());
 
-const handleLoginResponse = (msg) => {
+const handleCreateResponse = (msg) => {
   message.value = msg
   showMessage.value = true
   setTimeout(() => {
@@ -19,10 +27,10 @@ const handleLoginResponse = (msg) => {
   <div class="row fullpage">
     <div class="col-2 center-h">
       <img id="art" class="background-image" src="../assets/images/clouds-1.png">
-      <h2>Keep track of tasks, manage your teams.</h2>
+      <h2>Is it your next billion dollar business? 🚀</h2>
     </div>
     <div class="col-2 center-h">
-      <LoginForm @responded="handleLoginResponse"/>
+      <TeamForm @responded="handleCreateResponse"/>
     </div>
   </div>
   <div v-if="showMessage">

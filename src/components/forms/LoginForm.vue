@@ -23,10 +23,10 @@ watch(state, () => {
 </script>
 
 <template>
-  <div id="form">
+  <div class="form">
     <h2 class="title" >Login</h2>
     <h5 class="input-title">Email</h5>
-    <input class="input" type="email" placeholder="myfunkyemail@klokker.com" v-model="email">
+    <input type="email" placeholder="myfunkyemail@klokker.com" v-model="email">
     <h5 class="input-title">Password</h5>
     <input type="password" placeholder="iloveCats123" v-model="password">
     <button @click="submitLogin" id="login-button" class="rounded-m" >Login</button>
@@ -34,11 +34,7 @@ watch(state, () => {
 </template>
 
 <style scoped>
-#form {
-  display: flex;
-  flex-direction: column;
-}
-.input {
+input {
   margin-bottom: 16px;
 }
 

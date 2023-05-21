@@ -22,7 +22,27 @@ const router = createRouter({
       path: '/dashboard',
       name: 'dashboard',
       component: () => import('../views/DashboardView.vue')
-    }
+    },
+    {
+      path: '/myteam',
+      name: 'myteam',
+      component: () => import('../views/TeamView.vue')
+    },
+    {
+      path: '/project/:id',
+      name: 'project',
+      component: () => import('../views/ProjectView.vue')
+    },
+    {
+      path: '/new-project',
+      name: 'new-project',
+      component: () => import('../views/ProjectView.vue')
+    },
+    {
+      path: '/new-task/:id',
+      name: 'new-task',
+      component: () => import('../views/NewTaskView.vue')
+    },
   ],
 })
 

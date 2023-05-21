@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import LoginForm from '../components/forms/LoginForm.vue';
+import TaskForm from '../components/forms/TaskForm.vue';
 import MessagePopup from '../components/popups/MessagePopup.vue';
 
 const message = ref('');
@@ -22,7 +22,7 @@ const handleLoginResponse = (msg) => {
       <h2>Keep track of tasks, manage your teams.</h2>
     </div>
     <div class="col-2 center-h">
-      <LoginForm @responded="handleLoginResponse"/>
+      <TaskForm @responded="handleLoginResponse"/>
     </div>
   </div>
   <div v-if="showMessage">
