@@ -125,7 +125,7 @@ const adminMenuItems = ref([
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 20px;
+  padding: 20px 20px 10px 20px;
   background-color: var(--kl-dark-2);
   margin-bottom: 20px;
 }
@@ -139,6 +139,10 @@ ul {
 li {
   margin-bottom: 10px;
   cursor: pointer;
+}
+
+a {
+  margin-bottom: 10px;
 }
 </style>
   

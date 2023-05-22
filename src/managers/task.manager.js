@@ -36,9 +36,9 @@ const taskManager = () => {
         _projectId: taskBody.projectId,
       })
       console.log(response);
-      router.push('/project/'+taskBody.projectId);
+      router.push('/project/' + taskBody.projectId);
     } catch (error) {
-        console.log(error);
+      console.log(error);
       state.error = error.response?.data.error.message ?? 'Failed task creation'
     } finally {
       state.loading = false
@@ -63,7 +63,23 @@ const taskManager = () => {
     }
   }
 
-  return { state, create, getForProject }
+  const update = async (taskId, updateBody) => {
+    state.loading = true
+    state.error = null
+    console.log(taskId);
+    console.log(updateBody);
+    try {
+      const response = await taskService.patch('/' + taskId, updateBody);
+      window.location.reload();
+      return response.data
+    } catch (error) {
+      state.error = error.response?.data.error.message ?? 'Could not update task'
+      state.loading = false
+      throw error
+    }
+  }
+
+  return { state, create, getForProject, update }
 }
 
 export default taskManager

@@ -1,85 +1,147 @@
 <script setup>
 import { ref, defineProps } from 'vue';
+import taskManager from '../../managers/task.manager'
+
+const { update } = taskManager();
+
+const upState = () => {
+  let updateBody = {
+    state: props.state == "todo" ? "doing" : "done" 
+  }
+  update(props.id, updateBody);
+}
+
+const downState = () => {
+  let updateBody = { 
+    state: props.state == "done" ? "doing" : "todo" 
+  }
+  update(props.id, updateBody);
+}
+
 const props = defineProps({
-    title: {
-        type: String,
-        required: true,
-    },
-    description: {
-        type: String,
-        required: true,
-    },
-    assignedUser: {
-        type: String,
-        default: '',
-    },
-    startDate: {
-        type: String,
-        required: true,
-    },
-    dueDate: {
-        type: String,
-        required: true,
-    },
-    state: {
-        type: String,
-        required: true,
-    },
-    billable: {
-        type: Boolean,
-        default: false,
-    },
+  id: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  assignedUser: {
+    type: String,
+    default: '',
+  },
+  allocMinutes: {
+    type: Number,
+    required: true,
+  },
+  dueDate: {
+    type: String,
+    required: true,
+  },
+  state: {
+    type: String,
+    required: true,
+  },
+  billable: {
+    type: Boolean,
+    default: false,
+  },
 })
 </script>
 
 <template>
-    <div class="task-card">
-      <h3>{{ title }}</h3>
-      <p>{{ description }}</p>
-      <div v-if="assignedUser" class="assigned-user">
-        <strong>Assigned To:</strong> {{ assignedUser }}
+  <div class="task-card shadow rounded-m">
+    <h3>{{ title }}</h3>
+    <div class="space-h"></div>
+    <h5>{{ description }}</h5>
+    <div class="space-h"></div>
+    <div v-if="assignedUser">
+      <h3>Assigned To: {{ assignedUser }}</h3>
+    </div>
+    <div class="row">
+      <div>
+        Est.:
+        <h3> {{ Math.floor(allocMinutes / 60) }}h {{ allocMinutes % 60 }}m</h3>
       </div>
-      <div class="date-range">
-        <strong>Due Dates:</strong> {{ startDate }} - {{ dueDate }}
-      </div>
-      <div class="task-state">
-        <strong>State:</strong>
-        <span class="dot" :class="state"></span>
-      </div>
-      <div class="billable">
-        <strong>Billable:</strong> {{ billable ? 'Yes' : 'No' }}
+      <div class="space-v"></div>
+      <div>
+        Due:
+        <h3> {{ dueDate }}</h3>
       </div>
     </div>
-  </template>
+
+    <div class="space-h"></div>
+    <div class="row controls">
+      <div v-if="state != 'todo'">
+        <button @click="downState" class="move-button rounded-s">
+          <div v-if="state == 'doing'">◀️</div>
+          <div v-if="state == 'done'">◀️</div>
+        </button>
+      </div>
+      <div v-else>
+        <div class="move-button-placeholder"></div>
+      </div>
+      <div class="billable">
+        {{ billable ? '🔔' : '' }}
+      </div>
+      <div v-if="state != 'done'">
+        <button @click="upState" class="move-button rounded-s">
+          <div v-if="state == 'todo'">▶️</div>
+          <div v-if="state == 'doing'">✅</div>
+        </button>
+      </div>
+      <div v-else>
+        <div class="move-button-placeholder"></div>
+      </div>
+    </div>
+  </div>
+</template>
   
-  <style scoped>
-  .task-card {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 16px;
-  }
-  
-  .assigned-user {
-    margin-top: 8px;
-  }
-  
-  .date-range {
-    margin-top: 8px;
-  }
-  
-  .task-state {
-    margin-top: 8px;
-  }
-  
-  .dot {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin-left: 8px;
-  }
-  
-  .billable {
-    margin-top: 8px;
-  }
-  </style>
+<style scoped>
+h3 {
+  font-weight: var(--font-weight-bold);
+  -webkit-user-select: text; /* Safari */
+  -moz-user-select: text; /* Firefox */
+  -ms-user-select: text; /* Internet Explorer/Edge */
+  user-select: text; /* Standard syntax */
+}
+
+h5 {
+  -webkit-user-select: text; /* Safari */
+  -moz-user-select: text; /* Firefox */
+  -ms-user-select: text; /* Internet Explorer/Edge */
+  user-select: text; /* Standard syntax */
+}
+
+.task-card {
+  padding: 16px;
+  background-color: var(--kl-dark-2);
+}
+
+.controls {
+  justify-content: space-between;
+}
+
+.move-button {
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  background-color: var(--kl-dark-2);
+}
+
+.move-button:hover {
+  background-color: var(--kl-dark-2);
+}
+
+.move-button-placeholder {
+  width: 20px;
+  height: 20px;
+}
+
+
+</style>

@@ -5,7 +5,7 @@ import { ref, watch, defineEmits } from 'vue';
 const email = ref('');
 const password = ref('');
 
-const { login, state } = authManager()
+const { login, state } = authManager();
 
 const submitLogin = () => {
   login(email.value, password.value);

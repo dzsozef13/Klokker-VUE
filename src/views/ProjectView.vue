@@ -16,7 +16,8 @@ const { getForProject } = taskManager();
 const token = ref(storage.get('token'));
 const user = ref(storage.get('user'));
 const project = ref(null);
-const tasks = ref(null);
+const tasks = ref([]);
+const doneCount = ref(0);
 
 const newProject = () => {
   router.push('/new-task/'+projectId);
@@ -24,12 +25,16 @@ const newProject = () => {
 
 onMounted(async () => {
   const projectResponse = await get(projectId);
-  console.log(projectResponse);
   project.value = projectResponse;
 
   const taskResponse = await getForProject(projectId);
-  console.log(taskResponse);
   tasks.value = taskResponse;
+
+  for (let i = 0; i < taskResponse.length; i++) {
+  if (taskResponse[i].state == 'done') {
+    doneCount.value++;
+  }
+}
 });
 
 // const tasks = ref([
@@ -75,16 +80,27 @@ onMounted(async () => {
 <template>
   <div class="row header">
     <h1>{{ project?.name ?? '...' }}</h1>
+    <!-- <h1> {{ doneCount }} / {{ tasks.value?.length ?? 0 }} </h1> -->
     <button @click="newProject" id="login-button" class="rounded-m">New Task</button>
   </div>
+  <div class="space-h"></div>
   <div class="space-h"></div>
   <div class="row fullpage">
     <div class="col-3 center-v">
       <h3>Todo</h3>
+      <div class="space-h"></div>
       <div v-for="task in tasks">
         <div v-if="task?.state === 'todo' || task?.state == undefined">
-          <TaskCard :title="task.title" :description="task.description" :assignedUser="task.assignedUser"
-            :startDate="task.startDate" :dueDate="task.dueDate" :state="task.state" :billable="task.billable" />
+          <TaskCard 
+            :id="task._id"
+            :title="task.title" 
+            :description="task.description" 
+            :assignedUser="task.assignedUser"
+            :allocMinutes="task.allocMinutes"
+            :dueDate="new Date(task.dueDate).toLocaleDateString()"
+            :state="task.state" 
+            :billable="task.billable"
+          />
           <div class="space-h"></div>
         </div>
       </div>
@@ -92,10 +108,19 @@ onMounted(async () => {
     <div class="space-v"></div>
     <div class="col-3 center-v">
       <h3>Doing</h3>
+      <div class="space-h"></div>
       <div v-for="task in tasks">
         <div v-if="task?.state === 'doing'">
-          <TaskCard :title="task.title" :description="task.description" :assignedUser="task.assignedUser"
-            :startDate="task.startDate" :dueDate="task.dueDate" :state="task.state" :billable="task.billable" />
+          <TaskCard 
+            :id="task._id"
+            :title="task.title" 
+            :description="task.description" 
+            :assignedUser="task.assignedUser"
+            :allocMinutes="task.allocMinutes"
+            :dueDate="new Date(task.dueDate).toLocaleDateString()" 
+            :state="task.state"
+            :billable="task.billable"
+          />
           <div class="space-h"></div>
         </div>
       </div>
@@ -103,10 +128,19 @@ onMounted(async () => {
     <div class="space-v"></div>
     <div class="col-3 center-v">
       <h3>Done</h3>
+      <div class="space-h"></div>
       <div v-for="task in tasks">
         <div v-if="task?.state === 'done'">
-          <TaskCard :title="task.title" :description="task.description" :assignedUser="task.assignedUser"
-            :startDate="task.startDate" :dueDate="task.dueDate" :state="task.state" :billable="task.billable" />
+          <TaskCard 
+            :id="task._id"
+            :title="task.title" 
+            :description="task.description" 
+            :assignedUser="task.assignedUser"
+            :allocMinutes="task.allocMinutes"
+            :dueDate="new Date(task.dueDate).toLocaleDateString()" 
+            :state="task.state" 
+            :billable="task.billable"
+          />
           <div class="space-h"></div>
         </div>
       </div>
