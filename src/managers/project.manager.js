@@ -25,12 +25,14 @@ const projectManager = () => {
     error: null
   })
 
-  const create = async (name) => {
+  const create = async (name, description) => {
     state.loading = true
     state.error = null
     try {
       const response = await projectService.post('/', {
         name: name,
+        description: description,
+        _teamId: loggedInUser._teamId
       })
       router.push('/dashboard');
     } catch (error) {

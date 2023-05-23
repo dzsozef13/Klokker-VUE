@@ -37,14 +37,22 @@ onMounted(async () => {
   const userResponse = await refreshLoggedInUser();
   user.value = userResponse;
 
-  const teamResponse = await getForLoggedInUser();
-  team.value = teamResponse.name;
+  if (user.value._teamId) {
+    const teamResponse = await getForLoggedInUser();
+    team.value = teamResponse.name;
+  }
 
-  const projectResponse = await getForTeam(user.value._teamId);
-  projects.value = projectResponse;
+  if (user.value._teamId) {
+    const projectResponse = await getForTeam(user.value._teamId);
+    projects.value = projectResponse;
+    console.log(projectResponse);
+  }
 
-  const inviteResponse = await getForLoggedInUserInvite();
-  inviteFromTeam.value = inviteResponse;
+  if (user.value.invite) {
+    const inviteResponse = await getForLoggedInUserInvite();
+    console.log(inviteResponse);
+    inviteFromTeam.value = inviteResponse;
+  }
 });
 
 const visitorMenuItems = ref([
@@ -92,6 +100,7 @@ const adminMenuItems = ref([
       <div>
         <h1>Klokker</h1>
         <h5>👋 {{ user?.name ?? 'Welcome'  }} </h5>
+        <h5> {{ user?.email }} </h5>
         <!-- <h5>Team: {{ team ?? '...' }} </h5> -->
         <div class="space-h"></div>
         <div v-if="user">
@@ -132,18 +141,18 @@ const adminMenuItems = ref([
           <a href="/new-project">➕ New Project</a>
         </div>
       </div>
+    </div>
 
-      <div v-if="inviteFromTeam != null">
-        <div class="menu rounded-m shadow">
-          <h2>💌</h2>
-          <h5> You've received an invitation to join: </h5>
-          <h4> {{ inviteFromTeam?.name }} </h4>
-          <div class="space-h"></div>
-          <button @click="acceptInvite" class="rounded-s">Join</button>
-          <div class="space-h"></div>
-          <button @click="declineInvite" id="decline-inv-button" class="rounded-s">Nope</button>
-          <div class="space-h"></div>
-        </div>
+    <div v-if="inviteFromTeam">
+      <div class="menu rounded-m shadow">
+        <h2>💌</h2>
+        <h5> You've received an invitation to join: </h5>
+        <h4> {{ inviteFromTeam?.name }} </h4>
+        <div class="space-h"></div>
+        <button @click="acceptInvite" class="rounded-s">Join</button>
+        <div class="space-h"></div>
+        <button @click="declineInvite" id="decline-inv-button" class="rounded-s">Nope</button>
+        <div class="space-h"></div>
       </div>
     </div>
 

@@ -6,45 +6,6 @@ import TaskCard from '../components/cards/TaskCard.vue';
 
 const token = ref(storage.get('token'));
 const user = ref(storage.get('user'));
-
-const tasks = ref([
-  {
-    title: "Test task 1",
-    description: 'Test task description, lorem ipsum, this is a nice paragraph.',
-    assignedUser: "John Doe",
-    startDate: "05/22",
-    dueDate: "05/27",
-    state: "todo",
-    billable: true
-  },
-  {
-    title: "Test task 2",
-    description: 'Test task description, lorem ipsum, this is a nice paragraph.',
-    assignedUser: "John Doe",
-    startDate: "05/22",
-    dueDate: "05/27",
-    state: "todo",
-    billable: true
-  },
-  {
-    title: "Test task 3",
-    description: 'Test task description, lorem ipsum, this is a nice paragraph.',
-    assignedUser: "John Doe",
-    startDate: "05/22",
-    dueDate: "05/27",
-    state: "doing",
-    billable: true
-  },
-  {
-    title: "Test task 4",
-    description: 'Test task description, lorem ipsum, this is a nice paragraph.',
-    assignedUser: "John Doe",
-    startDate: "05/22",
-    dueDate: "05/27",
-    state: "done",
-    billable: true
-  },
-])
 </script>
 
 <template>
@@ -52,10 +13,27 @@ const tasks = ref([
   <div class="row header">
     <h1>Dashboard</h1>
   </div>
+  <div class="row">
+    <div class="col-1 center-v center-h">
+      <div v-if="user">
+        <div class="space-h"></div>
+        <div class="space-h"></div>
+        <div class="space-h"></div>
+        <h3>Hello, {{ user?.name }}!</h3>
+        <h4>What are we working on today? </h4>
+      </div>
+      <div v-else>
+        <h1>Welcome to Klokker.</h1>
+        <h3>To start logging your tasks, please register a user first.</h3>
+        <div class="space-h"></div>
+        <button @click="signMeUp" class="rounded-s">Sign me up!</button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-#grid {
-  margin: 0 20px;
+h3 {
+  font-size: 32px;
 }
 </style>

@@ -52,8 +52,8 @@ onMounted(async () => {
     <div class="col-3 center-v">
       <h3>Todo</h3>
       <div class="space-h"></div>
-      <div v-for="task in tasks">
-        <div v-if="task?.state === 'todo' || task?.state == undefined">
+      <div v-for="task in tasks" style="width: 100%">
+        <div v-if="task?.state === 'todo' || task?.state == undefined" style="width: 100%">
           <TaskCard 
             :id="task._id"
             :title="task.title" 
@@ -72,8 +72,8 @@ onMounted(async () => {
     <div class="col-3 center-v">
       <h3>Doing</h3>
       <div class="space-h"></div>
-      <div v-for="task in tasks">
-        <div v-if="task?.state === 'doing'">
+      <div v-for="task in tasks" style="width: 100%">
+        <div v-if="task?.state === 'doing'" style="width: 100%">
           <TaskCard 
             :id="task._id"
             :title="task.title" 
@@ -92,8 +92,8 @@ onMounted(async () => {
     <div class="col-3 center-v">
       <h3>Done</h3>
       <div class="space-h"></div>
-      <div v-for="task in tasks">
-        <div v-if="task?.state === 'done'">
+      <div v-for="task in tasks" style="width: 100%">
+        <div v-if="task?.state === 'done'" style="width: 100%">
           <TaskCard 
             :id="task._id"
             :title="task.title" 

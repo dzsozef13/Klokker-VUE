@@ -71,10 +71,8 @@ const teamManager = () => {
     state.loading = true
     state.error = null
     try {
-      if (storage.get('user').invite != null) {
-        const response = await teamService.get('/' + storage.get('user').invite);
-        return response.data
-      }
+      const response = await teamService.get('/' + storage.get('user').invite);
+      return response.data
     } catch (error) {
       state.error = error.response?.data.error.message ?? 'Could not find team'
       state.loading = false

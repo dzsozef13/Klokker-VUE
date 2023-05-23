@@ -100,11 +100,26 @@ const userManager = () => {
     }
   }
 
+  const inviteUserToTeam = async (email) => {
+    state.loading = true
+    state.error = null
+    try {
+      const userByEmail = await userService.get('/email/' + email);
+      console.log(userByEmail);
+      const response = await userService.patch('/' + userByEmail.data._id, {invite: user._teamId});
+      router.push('/myteam');
+    } catch (error) {
+      state.error = error.response?.data.error.message ?? 'Could not update user'
+      state.loading = false
+      throw error
+    }
+  }
+
   const updateUserById = async (userId, updateBody) => {
     state.loading = true
     state.error = null
     try {
-      const response = await userService.patch('/' + userId, updateBody);
+      const response = await userService.patch('/' + userId, {updateBody});
       return response.data
     } catch (error) {
       state.error = error.response?.data.error.message ?? 'Could not update user'
@@ -118,9 +133,11 @@ const userManager = () => {
     state.error = null
     try {
       const response = await userService.post('/team', {
+        teamId: teamId,
         userId: user._id,
-        teamId: teamId
       });
+      const removeInvite = await userService.patch('/' + user._id, {invite: null});
+      console.log(removeInvite);
       router.push('/myteam');
     } catch (error) {
       state.error = error.response?.data.error.message ?? 'Could not assign user to team'
@@ -129,7 +146,7 @@ const userManager = () => {
     }
   }
 
-  return { state, createUser, getUserById, getUsers, refreshLoggedInUser, updateLoggedInUser, updateUserById, assignTeamToLoggedInUser }
+  return { state, createUser, getUserById, getUsers, refreshLoggedInUser, inviteUserToTeam, updateLoggedInUser, updateUserById, assignTeamToLoggedInUser }
 }
 
 export default userManager

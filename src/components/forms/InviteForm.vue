@@ -1,13 +1,13 @@
 <script setup>
-import teamManager from '../../managers/team.manager';
+import userManager from '../../managers/user.manager';
 import { ref, watch, defineEmits } from 'vue';
 
-const teamName = ref('');
+const email = ref('');
 
-const { create, state } = teamManager()
+const { state, inviteUserToTeam } = userManager()
 
-const submitTeam = () => {
-  create(teamName.value);
+const sendInvite = () => {
+  inviteUserToTeam(email.value);
 };
 
 const emit = defineEmits(['responded', 'unClose'])
@@ -23,10 +23,10 @@ watch(state, () => {
 
 <template>
   <div class="form">
-    <h2 class="title">Create team</h2>
-    <h5 class="input-title">Name</h5>
-    <input type="text" placeholder="My Company Inc." v-model="teamName">
-    <button @click="submitTeam" id="create-button" class="rounded-m" >Create Team</button>
+    <h2 class="title">Invite people</h2>
+    <h5 class="input-title">Email</h5>
+    <input type="text" placeholder="My Company Inc." v-model="email">
+    <button @click="sendInvite" id="create-button" class="rounded-m" >Send</button>
   </div>
 </template>
 

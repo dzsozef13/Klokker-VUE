@@ -36,12 +36,17 @@ const router = createRouter({
     {
       path: '/new-project',
       name: 'new-project',
-      component: () => import('../views/ProjectView.vue')
+      component: () => import('../views/NewProjectView.vue')
     },
     {
       path: '/new-task/:id',
       name: 'new-task',
       component: () => import('../views/NewTaskView.vue')
+    },
+    {
+      path: '/invite/',
+      name: 'invite',
+      component: () => import('../views/InviteView.vue')
     },
   ],
 })

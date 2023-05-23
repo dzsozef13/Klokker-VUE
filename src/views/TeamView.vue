@@ -45,7 +45,7 @@ onMounted(async () => {
       <h1>{{ team?.name ?? '...' }}</h1>
       <button @click="leaveTeam" id="leave-button" class="rounded-s">Leave Team</button>
     </div>
-    <div class="col-1 center-h">
+    <div class="col-2 center-h">
       <div class="space-h"></div>
       <div class="space-h"></div>
       <h2> {{ members?.length }} Members</h2>
