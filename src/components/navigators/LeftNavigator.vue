@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onBeforeMount, watch } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { storage } from '../../storage/local.storage'
 import teamManager from '../../managers/team.manager'
 import projectManager from '../../managers/project.manager'
@@ -33,14 +33,14 @@ const logout = () => {
   user.value = null;
 }
 
-onBeforeMount(async () => {
+onMounted(async () => {
   const userResponse = await refreshLoggedInUser();
   user.value = userResponse;
 
   const teamResponse = await getForLoggedInUser();
   team.value = teamResponse.name;
 
-  const projectResponse = await getForTeam();
+  const projectResponse = await getForTeam(user.value._teamId);
   projects.value = projectResponse;
 
   const inviteResponse = await getForLoggedInUserInvite();
@@ -118,7 +118,7 @@ const adminMenuItems = ref([
       </ul>
     </div>
 
-    <div v-if="user">
+    <div v-if="user?._teamId">
       <div class="menu rounded-m shadow">
         <h3>Projects</h3>
         <div class="space-h"></div>

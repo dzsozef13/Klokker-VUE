@@ -52,12 +52,12 @@ const projectManager = () => {
     }
   }
 
-  const getForTeam = async () => {
+  const getForTeam = async (teamId) => {
     state.loading = true
     state.error = null
     try {
       let projectQuery = {
-        _teamId: loggedInUser._teamId
+        _teamId: teamId
       }
       const response = await projectService.get('/', {
         params: projectQuery,

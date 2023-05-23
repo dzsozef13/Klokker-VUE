@@ -37,45 +37,6 @@ onMounted(async () => {
   }
 }
 });
-
-// const tasks = ref([
-//   {
-//     title: "Test task 1",
-//     description: 'Test task description, lorem ipsum, this is a nice paragraph.',
-//     assignedUser: "John Doe",
-//     startDate: "05/22",
-//     dueDate: "05/27",
-//     state: "todo",
-//     billable: true
-//   },
-//   {
-//     title: "Test task 2",
-//     description: 'Test task description, lorem ipsum, this is a nice paragraph.',
-//     assignedUser: "John Doe",
-//     startDate: "05/22",
-//     dueDate: "05/27",
-//     state: "todo",
-//     billable: true
-//   },
-//   {
-//     title: "Test task 3",
-//     description: 'Test task description, lorem ipsum, this is a nice paragraph.',
-//     assignedUser: "John Doe",
-//     startDate: "05/22",
-//     dueDate: "05/27",
-//     state: "doing",
-//     billable: true
-//   },
-//   {
-//     title: "Test task 4",
-//     description: 'Test task description, lorem ipsum, this is a nice paragraph.',
-//     assignedUser: "John Doe",
-//     startDate: "05/22",
-//     dueDate: "05/27",
-//     state: "done",
-//     billable: true
-//   },
-// ])
 </script>
 
 <template>
@@ -83,7 +44,7 @@ onMounted(async () => {
   <div class="row header">
     <h1>{{ project?.name ?? '...' }}</h1>
     <!-- <h1> {{ doneCount }} / {{ tasks.value?.length ?? 0 }} </h1> -->
-    <button @click="newProject" id="login-button" class="rounded-m">New Task</button>
+    <button @click="newProject" id="login-button" class="rounded-s">New Task</button>
   </div>
   <div class="space-h"></div>
   <div class="space-h"></div>

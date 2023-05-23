@@ -57,6 +57,21 @@ const userManager = () => {
     }
   }
 
+  const getUsers = async (userQuery) => {
+    state.loading = true
+    state.error = null
+    try {
+      const response = await userService.get('/', {
+        params: userQuery,
+      });
+      return response.data
+    } catch (error) {
+      state.error = error.response?.data.error.message ?? 'Could not find user'
+    } finally {
+      state.loading = false
+    }
+  }
+
   const refreshLoggedInUser = async () => {
     state.loading = true
     state.error = null
@@ -84,6 +99,19 @@ const userManager = () => {
     }
   }
 
+  const updateUserById = async (userId, updateBody) => {
+    state.loading = true
+    state.error = null
+    try {
+      const response = await userService.patch('/' + userId, updateBody);
+      return response.data
+    } catch (error) {
+      state.error = error.response?.data.error.message ?? 'Could not update user'
+      state.loading = false
+      throw error
+    }
+  }
+
   const assignTeamToLoggedInUser = async (teamId) => {
     state.loading = true
     state.error = null
@@ -100,7 +128,7 @@ const userManager = () => {
     }
   }
 
-  return { state, createUser, getUserById, refreshLoggedInUser, updateLoggedInUser, assignTeamToLoggedInUser }
+  return { state, createUser, getUserById, getUsers, refreshLoggedInUser, updateLoggedInUser, updateUserById, assignTeamToLoggedInUser }
 }
 
 export default userManager
