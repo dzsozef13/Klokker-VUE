@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import LoginForm from '../components/forms/LoginForm.vue';
 import MessagePopup from '../components/popups/MessagePopup.vue';
+import LeftNavigator from '../components/navigators/LeftNavigator.vue'
 
 const message = ref('');
 const showMessage = ref(false);
@@ -16,6 +17,7 @@ const handleLoginResponse = (msg) => {
 </script>
 
 <template>
+  <LeftNavigator/>
   <div class="row fullpage">
     <div class="col-2 center-h">
       <img id="art" class="background-image" src="../assets/images/clouds-1.png">

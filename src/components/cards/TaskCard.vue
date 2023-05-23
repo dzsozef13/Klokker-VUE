@@ -1,6 +1,9 @@
 <script setup>
 import { ref, defineProps } from 'vue';
+import { storage } from '../../storage/local.storage'
 import taskManager from '../../managers/task.manager'
+
+const user = ref(storage.get('user'));
 
 const { update } = taskManager();
 
@@ -86,9 +89,14 @@ const props = defineProps({
       <div v-else>
         <div class="move-button-placeholder"></div>
       </div>
-      <div class="billable">
-        {{ billable ? '🔔' : '' }}
+
+      <div v-if="user.length == 0">
+        <button>Assign myself</button>
       </div>
+      <div v-else-if="assignedUser == user._id">
+        <button>X</button>
+      </div>
+
       <div v-if="state != 'done'">
         <button @click="upState" class="move-button rounded-s">
           <div v-if="state == 'todo'">▶️</div>
@@ -132,10 +140,12 @@ h5 {
   width: 20px;
   height: 20px;
   background-color: var(--kl-dark-2);
+  opacity: 0.2;
 }
 
 .move-button:hover {
   background-color: var(--kl-dark-2);
+  opacity: 1;
 }
 
 .move-button-placeholder {

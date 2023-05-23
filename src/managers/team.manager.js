@@ -40,11 +40,23 @@ const teamManager = () => {
     }
   }
 
+  const getTeamById = async (teamId) => {
+    state.loading = true
+    state.error = null
+    try {
+      const response = await teamService.get('/' + teamId);
+      return response.data
+    } catch (error) {
+      state.error = error.response?.data.error.message ?? 'Could not find team'
+      state.loading = false
+      throw error
+    }
+  }
+
   const getForLoggedInUser = async () => {
     state.loading = true
     state.error = null
     try {
-      console.log(storage.get('user'));
       const response = await teamService.get('/' + storage.get('user')._teamId);
       return response.data
     } catch (error) {
@@ -54,7 +66,22 @@ const teamManager = () => {
     }
   }
 
-  return { state, create, getForLoggedInUser }
+  const getForLoggedInUserInvite = async () => {
+    state.loading = true
+    state.error = null
+    try {
+      if (storage.get('user').invite != null) {
+        const response = await teamService.get('/' + storage.get('user').invite);
+        return response.data
+      }
+    } catch (error) {
+      state.error = error.response?.data.error.message ?? 'Could not find team'
+      state.loading = false
+      throw error
+    }
+  }
+
+  return { state, create, getTeamById, getForLoggedInUser, getForLoggedInUserInvite }
 }
 
 export default teamManager

@@ -70,7 +70,7 @@ const taskManager = () => {
     console.log(updateBody);
     try {
       const response = await taskService.patch('/' + taskId, updateBody);
-      window.location.reload();
+      location.reload(true);
       return response.data
     } catch (error) {
       state.error = error.response?.data.error.message ?? 'Could not update task'

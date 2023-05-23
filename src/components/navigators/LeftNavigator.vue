@@ -1,30 +1,53 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeMount, watch } from 'vue';
 import { storage } from '../../storage/local.storage'
 import teamManager from '../../managers/team.manager'
 import projectManager from '../../managers/project.manager'
+import userManager from '../../managers/user.manager'
+import authManager from '../../managers/auth.manager'
 
-const { getForLoggedInUser } = teamManager();
+const { getForLoggedInUser, getForLoggedInUserInvite } = teamManager();
 const { getForTeam } = projectManager();
+const { refreshLoggedInUser, assignTeamToLoggedInUser, updateLoggedInUser } = userManager();
+const { logoutCurrentUser } = authManager();
 const user = ref(storage.get('user'));
 const team = ref(null);
 const projects = ref(null);
+const inviteFromTeam = ref(null);
 
-onMounted(async () => {
+const acceptInvite = () => {
+  assignTeamToLoggedInUser(inviteFromTeam?.value._id);
+  inviteFromTeam.value = null;
+};
+
+const declineInvite = () => {
+  let updateBody = {
+    invite: null
+  }
+  updateLoggedInUser(updateBody);
+  inviteFromTeam.value = null;
+};
+
+const logout = () => {
+  logoutCurrentUser()
+  user.value = null;
+}
+
+onBeforeMount(async () => {
+  const userResponse = await refreshLoggedInUser();
+  user.value = userResponse;
+
   const teamResponse = await getForLoggedInUser();
-  console.log(teamResponse.name);
   team.value = teamResponse.name;
 
   const projectResponse = await getForTeam();
-  console.log(projectResponse);
   projects.value = projectResponse;
+
+  const inviteResponse = await getForLoggedInUserInvite();
+  inviteFromTeam.value = inviteResponse;
 });
 
 const visitorMenuItems = ref([
-  {
-    title: "Home",
-    path: "/"
-  },
   {
     title: "Login",
     path: "/login"
@@ -43,10 +66,6 @@ const userMenuItems = ref([
   {
     title: "My Team",
     path: "/myteam"
-  },
-  {
-    title: "New Project",
-    path: "/create-project"
   },
 ])
 
@@ -72,8 +91,12 @@ const adminMenuItems = ref([
     <div class="menu rounded-m shadow">
       <div>
         <h1>Klokker</h1>
-        <h5>👋 {{ user.name ?? '...'  }} </h5>
+        <h5>👋 {{ user?.name ?? 'Welcome'  }} </h5>
         <!-- <h5>Team: {{ team ?? '...' }} </h5> -->
+        <div class="space-h"></div>
+        <div v-if="user">
+          <button id="logout-button" @click="logout">🚪</button>
+        </div>
       </div>
       <div class="space-h"></div>
       <ul>
@@ -95,16 +118,33 @@ const adminMenuItems = ref([
       </ul>
     </div>
 
-    <div class="menu rounded-m shadow">
-      <h3>Projects</h3>
-      <div class="space-h"></div>
-      <ul>
-        <li v-for="(project, index) in projects" :key="index">
-          <a :href="'/project/'+project._id">📁 {{ project.name }}</a>
-        </li>
-      </ul>
-    
-      <a href="/new-project">➕ New Project</a>
+    <div v-if="user">
+      <div class="menu rounded-m shadow">
+        <h3>Projects</h3>
+        <div class="space-h"></div>
+        <ul>
+          <li v-for="(project, index) in projects" :key="index">
+            <a :href="'/project/'+project._id">📁 {{ project.name }}</a>
+          </li>
+        </ul>
+        
+        <div v-if="user?.role == 'admin'">
+          <a href="/new-project">➕ New Project</a>
+        </div>
+      </div>
+
+      <div v-if="inviteFromTeam != null">
+        <div class="menu rounded-m shadow">
+          <h2>💌</h2>
+          <h5> You've received an invitation to join: </h5>
+          <h4> {{ inviteFromTeam?.name }} </h4>
+          <div class="space-h"></div>
+          <button @click="acceptInvite" class="rounded-s">Join</button>
+          <div class="space-h"></div>
+          <button @click="declineInvite" id="decline-inv-button" class="rounded-s">Nope</button>
+          <div class="space-h"></div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -143,6 +183,19 @@ li {
 
 a {
   margin-bottom: 10px;
+}
+
+#decline-inv-button {
+  background-color: var(--kl-red);
+}
+#decline-inv-button:hover {
+  background-color: var(--kl-light-1);
+}
+
+#logout-button {
+  padding: 0;
+  height: 20px;
+  background-color: var(--kl-dark-2);
 }
 </style>
   

@@ -28,7 +28,7 @@ const authManager = () => {
       const user = response.data.user
       storage.set('token', token);
       storage.set('user', user);
-      router.push('/');
+      router.push('/dashboard');
     } catch (error) {
       state.error = error.response?.data.error.message ?? 'Failed login'
     } finally {
@@ -36,11 +36,13 @@ const authManager = () => {
     }
   }
 
-  const logout = () => {
-    storage.set(null, token)
+  const logoutCurrentUser = () => {
+    storage.set('token', null)
+    storage.set('user', null);
+    router.push('/login');
   }
 
-  return { state, login, logout }
+  return { state, login, logoutCurrentUser }
 }
 
 export default authManager

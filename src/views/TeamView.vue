@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { storage } from '../storage/local.storage'
 import TeamForm from '../components/forms/TeamForm.vue';
+import LeftNavigator from '../components/navigators/LeftNavigator.vue'
 import MessagePopup from '../components/popups/MessagePopup.vue';
 import teamManager from '../managers/team.manager';
 
@@ -24,6 +25,7 @@ const handleCreateResponse = (msg) => {
 </script>
 
 <template>
+  <LeftNavigator/>
   <div class="row fullpage">
     <div class="col-2 center-h">
       <img id="art" class="background-image" src="../assets/images/clouds-1.png">

@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { storage } from '../storage/local.storage'
+import LeftNavigator from '../components/navigators/LeftNavigator.vue'
 import TaskCard from '../components/cards/TaskCard.vue';
 
 const token = ref(storage.get('token'));
@@ -47,6 +48,7 @@ const tasks = ref([
 </script>
 
 <template>
+  <LeftNavigator/>
   <div class="row header">
     <h1>Dashboard</h1>
   </div>

@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { storage } from '../storage/local.storage'
 import TaskCard from '../components/cards/TaskCard.vue';
+import LeftNavigator from '../components/navigators/LeftNavigator.vue'
 import { useRoute, useRouter } from 'vue-router';
 import projectManager from '../managers/project.manager'
 import taskManager from '../managers/task.manager'
@@ -78,6 +79,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <LeftNavigator/>
   <div class="row header">
     <h1>{{ project?.name ?? '...' }}</h1>
     <!-- <h1> {{ doneCount }} / {{ tasks.value?.length ?? 0 }} </h1> -->
