@@ -5,12 +5,13 @@ import { storage } from '../storage/local.storage'
 
 const userManager = () => {
   const router = useRouter();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const token = storage.get('token');
   const user = storage.get('user');
 
   const userService = axios.create({
-    baseURL: 'http://localhost:4000/user'
+    baseURL: apiUrl + '/user'
   });
 
   userService.interceptors.request.use((config) => {

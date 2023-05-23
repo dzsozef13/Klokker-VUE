@@ -5,12 +5,13 @@ import { storage } from '../storage/local.storage'
 
 const projectManager = () => {
   const router = useRouter();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const token = storage.get('token');
   const loggedInUser = storage.get('user');
 
   const projectService = axios.create({
-    baseURL: 'http://localhost:4000/project'
+    baseURL: apiUrl + '/project'
   });
 
   projectService.interceptors.request.use((config) => {

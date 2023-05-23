@@ -5,12 +5,13 @@ import { storage } from '../storage/local.storage'
 
 const teamManager = () => {
   const router = useRouter();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const token = storage.get('token');
   const loggedInUser = storage.get('user');
   
   const teamService = axios.create({
-    baseURL: 'http://localhost:4000/team'
+    baseURL: apiUrl + '/team'
   });
 
   teamService.interceptors.request.use((config) => {

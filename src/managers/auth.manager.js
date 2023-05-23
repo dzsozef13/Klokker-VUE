@@ -5,9 +5,10 @@ import { storage } from '../storage/local.storage'
 
 const authManager = () => {
   const router = useRouter();
+  const apiUrl = import.meta.env.VITE_API_URL;
   
   const authService = axios.create({
-    baseURL: 'http://localhost:4000/auth'
+    baseURL: apiUrl + '/auth'
   });
   
   const state = reactive({
